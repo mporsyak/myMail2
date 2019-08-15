@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<table class="table table-striped table-responsive-md">
+    <thead>
+    <tr>
+        <th>name</th>
+        <th>email</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <!--/*@thymesVar id="users" type="templates"*/-->
+    <tr th:each="userSender : ${userList}">
+        <!--/*@thymesVar id="name" type="templates"*/-->
+        <td th:text="${userSender.login}"></td>
+        <td th:text="${userSender.password}"></td>
+    </tr>
+    </tbody>
+    <p>Написать сообщение <a href="/addMessege">here</a></p>
+    <p>Посмотреть сообщения <a href="/showUserMessege">here</a></p>
+</table>
+
+</body>
+</html>

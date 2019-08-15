@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<form th:action="@{/addMessege}" method="post">
+    <h2>Введите сообщение</h2><br/>
+    <input type="text" hidden name="authUserLogin" th:value="${authUser}"/>
+    Текст сообщения<br/>
+    <input type="text" name="content"></input><br/>
+    Логин получателя<br/>
+    <input type="text" name="recipientLogin"></input><br/>
+    <input type="submit" value="Ok" name="Ok"><br>
+</form>
+</body>
+</html>
