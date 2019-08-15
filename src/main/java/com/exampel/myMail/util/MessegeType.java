@@ -6,5 +6,6 @@ package com.exampel.myMail.util;
 public class MessegeType {
     public final static String incoming = "Входящее";
     public final static String outcoming = "Исходящее";
+    public final static String myString = "2";
 
 }
