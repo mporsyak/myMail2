@@ -46,6 +46,53 @@
                     <!--/*@thymesVar id="name" type="templates"*/-->
                         <td onclick="openModal()" th:text="${userSender.login}"></td>
                         <td th:text="${userSender.password}"></td>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">
+                                            <p th:text="'Сообщения от ' + ${userSender.login}" />
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <!--...-->
+                                    <body class="text-center">
+                                    <div class="container">
+                                        <form>
+
+                                            Сообщения от пользователя:
+
+
+                                            <div th:each="messege : ${messegeList}">
+                                                        <!--/*@thymesVar id="name" type="templates"*/-->
+                                                <p th:if="${messege.userRecip.login == authUserLogin}" th:text="'Входящее'"></p>
+                                                <p th:if="${messege.userSender.login == authUserLogin}" th:text="'Исходящее'"></p>
+                                                <p th:text="${messege.content}"></p>
+                                                <p th:if="${messege.userRecip.login == authUserLogin}" th:text="'Отправитель: ' + ${messege.userSender.login} "></p>
+                                                <p th:if="${messege.userSender.login == authUserLogin}" th:text="'Получатель: ' + ${messege.userRecip.login} "></p>
+                                            </div>
+
+
+                                            <a href="/authUserLogin" class="col-4 btn btn-lg btn-primary btn-light mb-2">Написать соощение</a>
+                                            <br>
+                                            <!--<a href="/recipientLogin" class="col-4 btn btn-lg btn-primary btn-dark">Кому</a>-->
+                                            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+
                     </tr>
                     </tbody>
 
@@ -54,29 +101,9 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script type="text/javascript">
         function openModal() {
+
             $('#exampleModal').modal();
         }
     </script>

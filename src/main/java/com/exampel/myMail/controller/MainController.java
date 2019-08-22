@@ -22,11 +22,7 @@ public class MainController {
     }
 
     @PostMapping(path = "/addUser")
-    public ModelAndView addUser(@RequestParam String login
-            , @RequestParam String password) {
-
-
-
+    public ModelAndView addUser(@RequestParam String login, @RequestParam String password) {
         if(userService.findByLogin(login)!=null){
             return new ModelAndView("greeting", "loginExist", "Логин занят");
         }
