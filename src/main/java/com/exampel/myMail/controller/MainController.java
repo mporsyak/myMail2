@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -42,7 +43,12 @@ public class MainController {
     }
 
     @GetMapping (path = "/all")
-    public ModelAndView getAllUsers() {
-        return new ModelAndView("all", "userList", userService.getAllUser());
+    public ModelAndView getAllUsers(Principal principal) {
+        ModelAndView model = new ModelAndView("/all");
+        model.addObject("userList", userService.getAllUser());
+        model.addObject("loggedUser", principal.getName());
+
+        return model;
+//        return new ModelAndView("all", "userList", userService.getAllUser());
     }
 }

@@ -44,4 +44,20 @@ public class AddMessegeController {
         }
         return "redirect:/showUserMessege";
     }
+
+    @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
+    public String sendMessage(@RequestParam(required = true) String userSenderLogin,
+                              @RequestParam(required = true) String userRecipLogin,
+                             @RequestParam(required = true) String messageContent) {
+        User userRecipient = userService.findByLogin(userRecipLogin);
+        User userSender = userService.findByLogin(userSenderLogin);
+
+        Messege messege = new Messege();
+        messege.setContent(messageContent);
+        messege.setUserSender(userSender);
+        messege.setUserRecip(userRecipient);
+        messegeService.addMessege(messege);
+
+        return "redirect:/all";
+    }
 }

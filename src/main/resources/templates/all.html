@@ -42,13 +42,14 @@
                     </thead>
                     <tbody>
                     <!--/*@thymesVar id="users" type="templates"*/-->
-                    <tr th:each="userSender : ${userList}">
+                    <tr th:each="userSender,iter : ${userList}">
+                        <!--//TODO: check cuurent user-->
                     <!--/*@thymesVar id="name" type="templates"*/-->
-                        <td onclick="openModal()" th:text="${userSender.login}"></td>
+                        <td th:onclick="'openModal(' + ${iter.index} + ')'" onclick="openModal()" th:text="${userSender.login}"></td>
                         <td th:text="${userSender.password}"></td>
 
                         <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" th:id="'exampleModal' + ${iter.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -62,28 +63,23 @@
 
                                     <!--...-->
                                     <body class="text-center">
-                                    <div class="container">
-                                        <form>
-
+                                        <div class="container">
                                             Сообщения от пользователя:
 
-
-                                            <div th:each="messege : ${messegeList}">
-                                                        <!--/*@thymesVar id="name" type="templates"*/-->
-                                                <p th:if="${messege.userRecip.login == authUserLogin}" th:text="'Входящее'"></p>
-                                                <p th:if="${messege.userSender.login == authUserLogin}" th:text="'Исходящее'"></p>
+                                            <div th:each="messege : ${userSender.list}">
+                                                <!--/*@thymesVar id="name" type="templates"*/-->
                                                 <p th:text="${messege.content}"></p>
-                                                <p th:if="${messege.userRecip.login == authUserLogin}" th:text="'Отправитель: ' + ${messege.userSender.login} "></p>
-                                                <p th:if="${messege.userSender.login == authUserLogin}" th:text="'Получатель: ' + ${messege.userRecip.login} "></p>
                                             </div>
 
-
-                                            <a href="/authUserLogin" class="col-4 btn btn-lg btn-primary btn-light mb-2">Написать соощение</a>
-                                            <br>
                                             <!--<a href="/recipientLogin" class="col-4 btn btn-lg btn-primary btn-dark">Кому</a>-->
-                                            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-                                        </form>
+                                            <form th:action="@{/sendMessage}" method="post">
+                                                <input hidden="hidden" type="text" class="form-control" name="userSenderLogin" th:value="${loggedUser}">
+                                                <input hidden="hidden" type="text" class="form-control" name="userRecipLogin" th:value="${userSender.login}">
+                                                <input type="text" class="form-control" name="messageContent" placeholder="Текст сообщения" required="" autofocus="">
+                                                <button type="submit" class="btn btn-primary btn-light">Написать сообщение</button>
+                                            </form>
                                     </div>
+                                    </body>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -91,7 +87,6 @@
                                 </div>
                             </div>
                         </div>
-            </div>
 
                     </tr>
                     </tbody>
@@ -102,9 +97,8 @@
     </div>
 
     <script type="text/javascript">
-        function openModal() {
-
-            $('#exampleModal').modal();
+        function openModal(index) {
+            $('#exampleModal' + index).modal();
         }
     </script>
 </body>
