@@ -15,7 +15,7 @@ import java.util.List;
 public class MainController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GetMapping(path = "/addUser")
     public String addNewUser() {
