@@ -27,9 +27,7 @@
 <body class="text-center">
 <div class="container">
     <form>
-        <!--/*@thymesVar id="name" type="templates"*/-->
-        <p class="h2 mb-2 font-weight-normal" th:text="'Hello, ' + ${name} + '!'" />
-        <p th:text="${loginExist}" />
+        <!--@thymesVar id="name" type="templates"*, ' + ${name} + '/-->
         <a href="/register" class="col-2 btn btn-lg btn-primary btn-light mb-2">Регистрация</a>
         <br>
         <a href="/login" class="col-2 btn btn-lg btn-primary btn-dark">Войти</a>

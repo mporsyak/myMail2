@@ -17,11 +17,6 @@ public class MainController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(path = "/addUser")
-    public String addNewUser() {
-        return "addUser";
-    }
-
     @PostMapping(path = "/addUser")
     public ModelAndView addUser(@RequestParam String login, @RequestParam String password) {
         if(userService.findByLogin(login)!=null){

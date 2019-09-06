@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../bootstrap-4.3.1-dist/css/bootstrap.css">
     <script src="../bootstrap-4.3.1-dist/js/jquery-3.4.1.js"></script>
@@ -16,29 +17,56 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
     <script src="../bootstrap-4.3.1-dist/script.js"></script>
 </head>
 <body>
-<!--<form th:action="@{/addMessege}" method="post">-->
-    <!--<h2>Введите сообщение</h2><br/>-->
-    <!--<input type="text" hidden name="authUserLogin" th:value="${authUser}"/>-->
-    <!--Текст сообщения<br/>-->
-    <!--<input type="text" name="content"></input><br/>-->
-    <!--Логин получателя<br/>-->
-    <!--<input type="text" name="recipientLogin"></input><br/>-->
-    <!--<input type="submit" value="Ok" name="Ok"><br>-->
+    <form>
+        <h2>Введите сообщение</h2><br/>
+        Текст сообщения<br/>
+        <input id="myContent" type="text" name="content"><br/>
+        Логин получателя<br/>
+        <input id="myRecipientLogin" type="text" name="recipientLogin"><br/>
+        <input type="button" onclick="sendMessage()" value="OK" name="Ok"><br>
+        <p id="info"></p>
 
-    <body class="text-center">
-    <div class="container">
-        <form>
+        <a href="/all">На главную</a>
+    </form>
+<script type="text/javascript">
+    function sendMessage(){
+        let body = {};
+        body.myContent = document.getElementById("myContent").value;
+        body.myRecipLogin = document.getElementById("myRecipientLogin").value;
+        //{"myContent":"1","myRecipLogin":"2"}
 
-            <input type="text" hidden name="authUserLogin" th:value="${authUser}"/>
-    <a href="/authUserLogin" class="col-4 btn btn-lg btn-primary btn-light mb-2">Написать соощение</a>
-    <br>
-    <a href="/recipientLogin" class="col-4 btn btn-lg btn-primary btn-dark">Кому</a>
-</form>
+        let response = post("/api/sendMessage", JSON.stringify(body));
+        document.getElementById("info").innerHTML = response.responseText;
+    }
+
+    function Get(requestUrl){
+        let httpreq = new XMLHttpRequest();
+        httpreq.open("GET", requestUrl, false);
+        httpreq.send(null);
+
+        return httpreq;
+    }
+
+    function post(requestUrl, body){
+        let httpreq = new XMLHttpRequest();
+        httpreq.open("POST", requestUrl, false);
+        httpreq.setRequestHeader("Content-type", "application/json;charset=UTF-8")
+        httpreq.send(body);
+
+        return httpreq;
+    }
+</script>
 </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title></title>
 </head>
-<body>
+<body onload="getMessages()">
 <table class="table table-striped table-responsive-md">
     <thead>
     <tr>
@@ -13,17 +13,58 @@
         <th>Назначение</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="myTBody">
     <!--/*@thymesVar id="users" type="templates"*/-->
-    <tr th:each="messege : ${messegeList}">
-        <!--/*@thymesVar id="name" type="templates"*/-->
+    <!--<tr>
+        /*@thymesVar id="name" type="templates"*/
         <td th:if="${messege.userRecip.login == authUserLogin}" th:text="'Входящее'"></td>
         <td th:if="${messege.userSender.login == authUserLogin}" th:text="'Исходящее'"></td>
         <td th:text="${messege.content}"></td>
         <td th:if="${messege.userRecip.login == authUserLogin}" th:text="'Отправитель: ' + ${messege.userSender.login} "></td>
         <td th:if="${messege.userSender.login == authUserLogin}" th:text="'Получатель: ' + ${messege.userRecip.login} "></td>
-    </tr>
+    </tr>-->
     </tbody>
 </table>
+
+<a href="/all">На главную</a>
+<script type="text/javascript">
+    function getMessages(){
+        let messages = JSON.parse(Get("/api/showMessages").responseText);
+        var myTBody = document.getElementById("myTBody");
+        for (i = 0; i < messages.length; i++){
+            var tr = document.createElement("tr");
+            myTBody.appendChild(tr);
+
+            var tdName = document.createElement("td");
+            tdName.innerHTML = messages[i].name;
+            tr.appendChild(tdName);
+
+            var tdEmail = document.createElement("td");
+            tdEmail.innerHTML = messages[i].email;
+            tr.appendChild(tdEmail);
+
+            var tdGoal = document.createElement("td");
+            tdGoal.innerHTML = messages[i].goal;
+            tr.appendChild(tdGoal);
+        }
+    }
+
+    function Get(requestUrl){
+        let httpreq = new XMLHttpRequest();
+        httpreq.open("GET", requestUrl, false);
+        httpreq.send(null);
+
+        return httpreq;
+    }
+
+    function post(requestUrl, body){
+        let httpreq = new XMLHttpRequest();
+        httpreq.open("POST", requestUrl, false);
+        httpreq.setRequestHeader("Content-type", "application/json;charset=UTF-8")
+        httpreq.send(body);
+
+        return httpreq;
+    }
+</script>
 </body>
 </html>
