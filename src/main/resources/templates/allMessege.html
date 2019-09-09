@@ -29,7 +29,7 @@
 <a href="/all">На главную</a>
 <script type="text/javascript">
     function getMessages(){
-        let messages = JSON.parse(Get("/api/showMessages").responseText);
+        let messages = JSON.parse(Get("/showMessages").responseText);
         var myTBody = document.getElementById("myTBody");
         for (i = 0; i < messages.length; i++){
             var tr = document.createElement("tr");
