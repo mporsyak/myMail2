@@ -1,6 +1,6 @@
 package com.exampel.myMail.controller;
 
-import com.exampel.myMail.model.MessageInfo;
+import com.exampel.myMail.model.MessageDto;
 import com.exampel.myMail.model.Messege;
 import com.exampel.myMail.model.SendMessage;
 import com.exampel.myMail.model.User;
@@ -15,15 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
-public class MessegeController {
+public class MessegeRestController {
 
     @Autowired
-   MessegeService messegeService;
+   private MessegeService messegeService;
 
     @Autowired
-    UserService userService;
-
+   private UserService userService;
 
     @PostMapping(value = "/sendMessage")
     public ResponseEntity<?> sendMessage(Principal principal,
@@ -46,17 +44,17 @@ public class MessegeController {
     }
 
     @GetMapping(value = "/showMessages")
-    public List<MessageInfo> addUserProfile(Principal principal){
+    public List<MessageDto> addUserProfile(Principal principal){
 
         String authUserLogin = principal.getName();
         List<Messege> allMessegeList = messegeService.getAllMessage();
 
-        List<MessageInfo> messages = new ArrayList();
+        List<MessageDto> messages = new ArrayList();
         for (int i = 0; i < allMessegeList.size(); i++) {
             Messege currentMessege = allMessegeList.get(i);
 
             if(currentMessege.getUserSender().getLogin().equals(authUserLogin) || currentMessege.getUserRecip().getLogin().equals(authUserLogin)){
-                MessageInfo messageInfo = new MessageInfo();
+                MessageDto messageInfo = new MessageDto();
                 messageInfo.setName(currentMessege.getUserSender().getLogin().equals(principal.getName()) ? "Исходящее" : "Входящее");
                 messageInfo.setEmail(currentMessege.getContent());
                 messageInfo.setGoal((currentMessege.getUserSender().getLogin().equals(principal.getName()) ?

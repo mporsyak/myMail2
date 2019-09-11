@@ -1,4 +1,4 @@
-package com.exampel.myMail;
+package com.exampel.myMail.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

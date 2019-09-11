@@ -1,4 +1,4 @@
-package com.exampel.myMail;
+package com.exampel.myMail.config;
 
 import com.exampel.myMail.service.MessegeService;
 import com.exampel.myMail.service.UserService;

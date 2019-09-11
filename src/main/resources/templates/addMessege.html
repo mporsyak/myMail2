@@ -47,7 +47,7 @@
         body.myRecipLogin = document.getElementById("myRecipientLogin").value;
         //{"myContent":"1","myRecipLogin":"2"}
 
-        let response = post("/api/sendMessage", JSON.stringify(body));
+        let response = post("/sendMessage", JSON.stringify(body));
         document.getElementById("info").innerHTML = response.responseText;
     }
 

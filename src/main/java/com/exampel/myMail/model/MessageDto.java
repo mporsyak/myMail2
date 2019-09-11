@@ -1,9 +1,6 @@
 package com.exampel.myMail.model;
 
-/**
- * Created by Михаил on 06.09.2019.
- */
-public class MessageInfo {
+public class MessageDto {
     private String name;
     private String email;
     private String goal;

@@ -1,8 +1,6 @@
 package com.exampel.myMail.model;
 
-/**
- * Created by Михаил on 06.09.2019.
- */
+
 public class SendMessage {
     private String myContent;
     private String myRecipLogin;
