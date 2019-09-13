@@ -43,27 +43,14 @@ public class MessegeRestController {
         return new ResponseEntity<>("Пользователь " + sendMessage.getMyRecipLogin() + " не найден", HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping(value = "/showMessages")
-    public List<MessageDto> addUserProfile(Principal principal){
+    @GetMapping(value = "/showIncomeMessages")
+    public List<MessageDto> showIncomeMessages(Principal principal){
+        return messegeService.getAllIncomeMessages(principal.getName());
+    }
 
-        String authUserLogin = principal.getName();
-        List<Messege> allMessegeList = messegeService.getAllMessage();
-
-        List<MessageDto> messages = new ArrayList();
-        for (int i = 0; i < allMessegeList.size(); i++) {
-            Messege currentMessege = allMessegeList.get(i);
-
-            if(currentMessege.getUserSender().getLogin().equals(authUserLogin) || currentMessege.getUserRecip().getLogin().equals(authUserLogin)){
-                MessageDto messageInfo = new MessageDto();
-                messageInfo.setName(currentMessege.getUserSender().getLogin().equals(principal.getName()) ? "Исходящее" : "Входящее");
-                messageInfo.setEmail(currentMessege.getContent());
-                messageInfo.setGoal((currentMessege.getUserSender().getLogin().equals(principal.getName()) ?
-                        "Получатель: " : "Отправитель: ") + currentMessege.getUserRecip().getLogin());
-                messages.add(messageInfo);
-            }
-        }
-
-        return messages;
+    @GetMapping(value = "/showOutcomeMessages")
+    public List<MessageDto> showOutcomeMessages(Principal principal){
+        return messegeService.getAllOutcomeMessages(principal.getName());
     }
 
     /*@RequestMapping(value = "/sendMessage", method = RequestMethod.POST)

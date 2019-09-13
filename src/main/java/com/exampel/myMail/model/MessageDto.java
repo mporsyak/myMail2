@@ -1,24 +1,15 @@
 package com.exampel.myMail.model;
 
 public class MessageDto {
-    private String name;
-    private String email;
+    private String content;
     private String goal;
 
-    public String getName() {
-        return name;
+    public String getContent() {
+        return content;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getGoal() {

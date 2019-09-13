@@ -11,15 +11,16 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../bootstrap-4.3.1-dist/css/bootstrap.css">
-    <script src="../bootstrap-4.3.1-dist/js/jquery-3.4.1.js"></script>
+    <!--<script src="../bootstrap-4.3.1-dist/js/jquery-3.4.1.js"></script>-->
     <script src="../bootstrap-4.3.1-dist/js/bootstrap.js"></script>
     <script src="../bootstrap-4.3.1-dist/script.js"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"></script>
@@ -35,12 +36,31 @@
         <input id="myContent" type="text" name="content"><br/>
         Логин получателя<br/>
         <input id="myRecipientLogin" type="text" name="recipientLogin"><br/>
-        <input type="button" onclick="sendMessage()" value="OK" name="Ok"><br>
+        <input type="button" onclick="sendMessageWithAjax()" value="OK" name="Ok"><br>
         <p id="info"></p>
 
         <a href="/all">На главную</a>
     </form>
 <script type="text/javascript">
+    function sendMessageWithAjax() {
+        let body = {};
+        body.myContent = document.getElementById("myContent").value;
+        body.myRecipLogin = document.getElementById("myRecipientLogin").value;
+
+        $.ajax({
+            method: 'POST',
+            contentType: 'application/json;charset=UTF-8',
+            url: 'sendMessage',
+            data: JSON.stringify(body),
+            success: function (response) {
+                document.getElementById("info").innerHTML = response.responseText;
+            },
+            error: function (response) {
+                document.getElementById("info").innerHTML = response.responseText;
+            }
+        });
+    }
+    
     function sendMessage(){
         let body = {};
         body.myContent = document.getElementById("myContent").value;
@@ -62,7 +82,7 @@
     function post(requestUrl, body){
         let httpreq = new XMLHttpRequest();
         httpreq.open("POST", requestUrl, false);
-        httpreq.setRequestHeader("Content-type", "application/json;charset=UTF-8")
+        httpreq.setRequestHeader("Content-type", "application/json;charset=UTF-8");
         httpreq.send(body);
 
         return httpreq;
