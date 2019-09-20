@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication//(scanBasePackages={"com.example.something", "com.example.application"})
 @EnableAutoConfiguration
-@ComponentScan( basePackages = {"com.exampel.myMail", "com.exampel.myMail.controller"})
-@EnableJpaRepositories( basePackages = {"com.exampel.myMail.repository"})
+@ComponentScan(basePackages = {"com.exampel.myMail", "com.exampel.myMail.controller"})
+@EnableJpaRepositories(basePackages = {"com.exampel.myMail.repository"})
 @EnableTransactionManagement
-@EntityScan( basePackages = "com.exampel.myMail.model")
+@EntityScan(basePackages = "com.exampel.myMail.model")
 
 
 public class Application {
