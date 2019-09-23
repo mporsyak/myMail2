@@ -22,15 +22,15 @@
         <div class="d-flex justify-content-center">
             <form>
                 <div class="mb-2">
-                    <input id="newLogin" type="text" name="login">
+                    <input id="newLogin" type="text" name="login" placeholder="Login">
                     <!--<input type="text" class="form-control" name="login" placeholder="Login">-->
                 </div>
                 <div class="col-4 mb-2">
-                    <input id="newPassword" type="text" name="password">
+                    <input id="newPassword" type="password" name="password" placeholder="Password">
                     <!--<input type="text" class="form-control" name="password" placeholder="Password">-->
                 </div>
                 <div class="col-4">
-                    <input type="button" onclick="addNewUser()" value="OK" name="Ok"><br>
+                    <input type="button" onclick="addNewUserWithAjax()" value="OK" name="Ok"><br>
                     <p id="info"></p>
 
                     <a href="/greting">На главную</a>

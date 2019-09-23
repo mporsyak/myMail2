@@ -18,8 +18,7 @@ public class UserRestController {
     private UserService userService;
 
     @PostMapping(path = "/addUser")
-    public ResponseEntity<?> addNewUser(@RequestBody User addNewUser
-    ){
+    public ResponseEntity<?> addNewUser(@RequestBody User addNewUser){
         String newLogin = addNewUser.getLogin();
         if (newLogin != null){
             User user = userService.findByLogin(newLogin);

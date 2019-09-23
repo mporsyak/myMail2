@@ -19,7 +19,7 @@ function sendMessageWithAjax() {
     });
 }
 
-function sendMessage(){
+/*function sendMessage(){
     let body = {};
     // body.myContent = document.getElementById("myContent").value;
     // body.myRecipLogin = document.getElementById("myRecipientLogin").value;
@@ -29,4 +29,4 @@ function sendMessage(){
 
     let response = post("/sendMessage", JSON.stringify(body));
     $('#info').text(response.responseText);
-}
+}*/

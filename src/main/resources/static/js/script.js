@@ -1,11 +1,12 @@
-function Get(requestUrl){
+/*function Get(requestUrl){
     let httpreq = new XMLHttpRequest();
     httpreq.open("GET", requestUrl, false);
     httpreq.send(null);
 
     return httpreq;
-}
+}*/
 
+/*
 function post(requestUrl, body){
     let httpreq = new XMLHttpRequest();
     httpreq.open("POST", requestUrl, false);
@@ -13,4 +14,4 @@ function post(requestUrl, body){
     httpreq.send(body);
 
     return httpreq;
-}
+}*/
