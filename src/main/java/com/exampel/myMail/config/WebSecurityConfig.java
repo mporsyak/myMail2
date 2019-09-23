@@ -37,23 +37,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "select login, 'ROLE_ADMIN' from user where login = ?");
     }
 
-    /*@Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/static*//**");
-    }*/
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/greeting", "/register", "/addUser", "/login").permitAll()
+                .antMatchers("/**/*.js", "/**/*.css", "/greeting", "/register", "/addUser", "/login").permitAll()
 //                .antMatchers("/all/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
-                .and()
-                .authorizeRequests().antMatchers("/static/**").permitAll().anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")
