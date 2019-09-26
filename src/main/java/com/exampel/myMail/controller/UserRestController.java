@@ -1,15 +1,15 @@
 package com.exampel.myMail.controller;
 
-//import com.exampel.myMail.model.NewUser;
 import com.exampel.myMail.model.User;
 import com.exampel.myMail.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class UserRestController {
@@ -51,13 +51,12 @@ public class UserRestController {
 //        return new ModelAndView("greeting", "userList", userService.getAllUser());
 //    }
 
-    @GetMapping (path = "/all")
-    public ModelAndView getAllUsers(Principal principal) {
-        ModelAndView model = new ModelAndView("/all");
-        model.addObject("userList", userService.getAllUser());
-        model.addObject("loggedUser", principal.getName());
+    @GetMapping (path = "/allUsers")
+    public List<String> getAllUsers(Principal principal) {
+        List<User> allUsers = userService.getAllUser();
+        allUsers.removeIf(e -> e.getLogin().equals(principal.getName()));
 
-        return model;
-//        return new ModelAndView("all", "userList", userService.getAllUser());
+        List<String> allLogins = allUsers.stream().map(e -> e.getLogin()).collect(Collectors.toList());
+        return allLogins;
     }
 }

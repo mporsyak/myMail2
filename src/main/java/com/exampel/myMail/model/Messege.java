@@ -1,6 +1,8 @@
 package com.exampel.myMail.model;
 
 import javax.persistence.*;
+import java.util.Date;
+
 @Entity
 public class Messege {
     @Id
@@ -14,6 +16,10 @@ public class Messege {
     @ManyToOne
     @JoinColumn(name = "user_recip_id")
     private User userRecip;
+
+    @Column(name = "create_msg_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date msgTime;
 
     public Messege() {}
 
@@ -43,5 +49,13 @@ public class Messege {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Date getMsgTime() {
+        return msgTime;
+    }
+
+    public void setMsgTime(Date msgTime) {
+        this.msgTime = msgTime;
     }
 }

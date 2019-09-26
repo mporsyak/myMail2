@@ -43,4 +43,9 @@ public class AllController { //TODO: server-side rendering and client-side rende
     public String allMessege() {
         return "allMessege";
     }
+
+    @GetMapping (path = "/all")
+    public String all() {
+        return "all";
+    }
 }

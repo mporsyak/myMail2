@@ -17,7 +17,7 @@
     <script type="text/javascript" th:src="@{/js/all.js}"></script>
     <script type="text/javascript" th:src="@{/js/script.js}"></script>
 </head>
-<body class="text-center">
+<body class="text-center" onload="loadUsersTable()">
     <div class="container-fluid">
         <div class="d-flex justify-content-center">
             <div class="col-2 mt-2">
@@ -31,58 +31,9 @@
                     <thead>
                     <tr>
                         <th scope="col">Name</th>
-                        <th scope="col">Email</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <!--/*@thymesVar id="users" type="templates"*/-->
-                    <tr th:each="userSender,iter : ${userList}">
-                        <!--//TODO: check cuurent user-->
-                    <!--/*@thymesVar id="name" type="templates"*/-->
-                        <td th:onclick="'openModal(' + ${iter.index} + ')'" onclick="openModal()" th:text="${userSender.login}"></td>
-                        <td th:text="${userSender.password}"></td>
-
-                        <!-- Modal -->
-                        <div class="modal fade" th:id="'exampleModal' + ${iter.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">
-                                            <p th:text="'Сообщения от ' + ${userSender.login}" />
-                                        </h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-
-                                    <!--...-->
-                                    <body class="text-center">
-                                        <div class="container">
-                                            Сообщения от пользователя:
-
-                                            <div th:each="messege : ${userSender.list}">
-                                                <!--/*@thymesVar id="name" type="templates"*/-->
-                                                <p th:text="${messege.content}"></p>
-                                            </div>
-
-                                            <!--<a href="/recipientLogin" class="col-4 btn btn-lg btn-primary btn-dark">Кому</a>-->
-                                            <form th:action="@{/sendMessage}" method="post">
-                                                <input hidden="hidden" type="text" class="form-control" name="userSenderLogin" th:value="${loggedUser}">
-                                                <input hidden="hidden" type="text" class="form-control" name="userRecipLogin" th:value="${userSender.login}">
-                                                <input type="text" class="form-control" name="messageContent" placeholder="Текст сообщения" required="" autofocus="">
-                                                <button type="submit" class="btn btn-primary btn-light">Отправить сообщение</button>
-                                            </form>
-                                    </div>
-                                    </body>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </tr>
+                    <tbody id="allUsersTable">
                     </tbody>
 
                 </table>
@@ -90,5 +41,25 @@
         </div>
     </div>
 
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p id="labelMsgFrom"></p>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 d-flex"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

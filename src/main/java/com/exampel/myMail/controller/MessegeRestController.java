@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -35,6 +36,7 @@ public class MessegeRestController {
             messege.setContent(sendMessage.getMyContent());
             messege.setUserSender(userSender);
             messege.setUserRecip(userRecipient);
+            messege.setMsgTime(new Date());
             messegeService.addMessege(messege);
 
             return new ResponseEntity<>("Сообщение успешно отправлено", HttpStatus.OK);
