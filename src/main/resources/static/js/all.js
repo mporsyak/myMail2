@@ -1,3 +1,45 @@
+function loadUserMessages(user){
+    $.ajax({
+        method: 'GET',
+        contentType: 'application/json;charset=UTF-8',
+        url: "allMessages/" + user,
+        data: null,
+        success: function (response) {
+            buildMessageView(user, response);
+            openModal();
+            document.getElementById("myRecipientLogin").value = user;
+        }
+    });
+}
+
+function buildMessageView(user, messages){
+    var labelMsgFrom = document.getElementById("labelMsgFrom");
+    labelMsgFrom.innerHTML = "Сообщения от пользователя: " + user;
+
+    var msgContainer = document.getElementById("msgContainer");
+    msgContainer.innerHTML = "";
+
+    for (i = 0; i < messages.length; i++){
+        var div = document.createElement("div");
+        div.setAttribute("class", "row");
+
+        var msgDiv = document.createElement("div");
+        msgDiv.setAttribute("class", "col-12 d-flex flex-column align-items-" + (messages[i].myMsg ? "end" : "start"));
+        div.appendChild(msgDiv);
+
+        var msg = document.createElement("div");
+        msg.innerHTML = messages[i].content;
+        msgDiv.appendChild(msg);
+
+        var timeDiv = document.createElement("div");
+        timeDiv.setAttribute("class", "msg-time");
+        timeDiv.innerHTML = messages[i].createMsgTime.substr(11, 5);
+        msgDiv.appendChild(timeDiv);
+
+        msgContainer.appendChild(div);
+    }
+}
+
 function openModal() {
     $('#exampleModal').modal();
 }
@@ -23,7 +65,25 @@ function buildUserTable(users){
         tBody.appendChild(tr);
 
         var tdLogin = document.createElement("td");
-        tdLogin.innerHTML = "<p onclick='openModal();'>" + users[i] + "</p>";
+        tdLogin.innerHTML = "<p onclick=\"loadUserMessages('" + users[i] + "');\">" + users[i] + "</p>";
         tr.appendChild(tdLogin);
     }
+}
+
+function sendMessageWithAjax() {
+    let body = {};
+    body.myContent = document.getElementById("myContent").value;
+    body.myRecipLogin = document.getElementById("myRecipientLogin").value;
+
+    $.ajax({
+        method: 'POST',
+        contentType: 'application/json;charset=UTF-8',
+        url: 'sendMessage',
+        data: JSON.stringify(body),
+        success: function (response) {
+            loadUserMessages(body.myRecipLogin);
+        },
+        error: function (response) {
+        }
+    });
 }

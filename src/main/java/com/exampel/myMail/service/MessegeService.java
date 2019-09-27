@@ -3,6 +3,7 @@ package com.exampel.myMail.service;
 
 import com.exampel.myMail.model.MessageDto;
 import com.exampel.myMail.model.Messege;
+import com.exampel.myMail.model.User;
 import com.exampel.myMail.repository.MessegeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,8 @@ public class MessegeService {
         return (List<Messege>)messegeRepository.findAll();
     }
 
-
+    public List<Messege> getAllMessageByUser(User userSender, User userRecip){
+        return messegeRepository.findByUserSenderAndUserRecip(userSender, userRecip);
+    }
 
 }

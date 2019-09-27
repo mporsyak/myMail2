@@ -52,7 +52,7 @@ public class UserRestController {
 //    }
 
     @GetMapping (path = "/allUsers")
-    public List<String> getAllUsers(Principal principal) {
+    public List<String> allUsers(Principal principal) {
         List<User> allUsers = userService.getAllUser();
         allUsers.removeIf(e -> e.getLogin().equals(principal.getName()));
 

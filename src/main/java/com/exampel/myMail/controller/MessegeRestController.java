@@ -55,19 +55,35 @@ public class MessegeRestController {
         return messegeService.getAllOutcomeMessages(principal.getName());
     }
 
-    /*@RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
-    public String sendMessage(@RequestParam(required = true) String userSenderLogin,
-                              @RequestParam(required = true) String userRecipLogin,
-                             @RequestParam(required = true) String messageContent) {
-        User userRecipient = userService.findByLogin(userRecipLogin);
-        User userSender = userService.findByLogin(userSenderLogin);
+    @GetMapping (path = "/allMessages/{user}")
+    public List<MessageDto> allMessages(@PathVariable String user, Principal principal) {
+        User userSender = userService.findByLogin(principal.getName());
+        User userRecip = userService.findByLogin(user);
 
-        Messege messege = new Messege();
-        messege.setContent(messageContent);
-        messege.setUserSender(userSender);
-        messege.setUserRecip(userRecipient);
-        messegeService.addMessege(messege);
+        List<Messege> senderMessages = messegeService.getAllMessageByUser(userSender, userRecip);
+        List<Messege> recipMessages = messegeService.getAllMessageByUser(userRecip, userSender);
 
-        return "redirect:/all";
-    }*/
+        List<MessageDto> result = new ArrayList<>();
+
+        for (Messege messege : senderMessages){
+            MessageDto  messageDto = new MessageDto();
+            messageDto.setContent(messege.getContent());
+            messageDto.setMyMsg(true);
+            messageDto.setCreateMsgTime(messege.getMsgTime());
+
+            result.add(messageDto);
+        }
+
+        for (Messege messege : recipMessages){
+            MessageDto  messageDto = new MessageDto();
+            messageDto.setContent(messege.getContent());
+            messageDto.setMyMsg(false);
+            messageDto.setCreateMsgTime(messege.getMsgTime());
+
+            result.add(messageDto);
+        }
+
+        result.sort((a,b) -> a.getCreateMsgTime().compareTo(b.getCreateMsgTime()));
+        return result;
+    }
 }
