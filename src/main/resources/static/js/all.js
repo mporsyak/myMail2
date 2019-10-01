@@ -24,17 +24,21 @@ function buildMessageView(user, messages){
         div.setAttribute("class", "row");
 
         var msgDiv = document.createElement("div");
-        msgDiv.setAttribute("class", "col-12 d-flex flex-column align-items-" + (messages[i].myMsg ? "end" : "start"));
+        msgDiv.setAttribute("class", "col-12 d-flex flex-column " + (messages[i].myMsg ? "align-items-end" : "align-items-start"));
         div.appendChild(msgDiv);
+
+        var msgDivContainer = document.createElement("div");
+        msgDivContainer.setAttribute("class", "card card-body mb-2 " + (messages[i].myMsg ? "bg-success" : "bg-primary"));
+        msgDiv.appendChild(msgDivContainer);
 
         var msg = document.createElement("div");
         msg.innerHTML = messages[i].content;
-        msgDiv.appendChild(msg);
+        msgDivContainer.appendChild(msg);
 
         var timeDiv = document.createElement("div");
         timeDiv.setAttribute("class", "msg-time");
         timeDiv.innerHTML = messages[i].createMsgTime.substr(11, 5);
-        msgDiv.appendChild(timeDiv);
+        msgDivContainer.appendChild(timeDiv);
 
         msgContainer.appendChild(div);
     }
