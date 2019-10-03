@@ -21,10 +21,11 @@ function buildMessageView(user, messages){
 
     for (i = 0; i < messages.length; i++){
         var div = document.createElement("div");
-        div.setAttribute("class", "row");
+        div.setAttribute("class", "row "  + (messages[i].myMsg ? "justify-content-end" : "justify-content-start"));
 
         var msgDiv = document.createElement("div");
         msgDiv.setAttribute("class", "col-12 d-flex flex-column " + (messages[i].myMsg ? "align-items-end" : "align-items-start"));
+        msgDiv.setAttribute("style", "max-width: 70%");
         div.appendChild(msgDiv);
 
         var msgDivContainer = document.createElement("div");
@@ -32,11 +33,11 @@ function buildMessageView(user, messages){
         msgDiv.appendChild(msgDivContainer);
 
         var msg = document.createElement("div");
-        msg.innerHTML = messages[i].content;
+        msg.innerHTML = "<p class='text-left text-break'>"  + messages[i].content + "</p>";
         msgDivContainer.appendChild(msg);
 
         var timeDiv = document.createElement("div");
-        timeDiv.setAttribute("class", "msg-time");
+        timeDiv.setAttribute("class", "msg-time text-right");
         timeDiv.innerHTML = messages[i].createMsgTime.substr(11, 5);
         msgDivContainer.appendChild(timeDiv);
 
