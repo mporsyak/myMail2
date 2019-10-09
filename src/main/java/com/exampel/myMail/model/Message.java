@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Messege {
+public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,7 +21,7 @@ public class Messege {
     @Temporal(TemporalType.TIMESTAMP)
     private Date msgTime;
 
-    public Messege() {}
+    public Message() {}
 
     public User getUserRecip() {return userRecip;}
 

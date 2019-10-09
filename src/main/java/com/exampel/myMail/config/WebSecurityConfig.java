@@ -1,6 +1,6 @@
 package com.exampel.myMail.config;
 
-import com.exampel.myMail.service.MessegeService;
+import com.exampel.myMail.service.MessageService;
 import com.exampel.myMail.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserService userService;
     @Autowired
-    MessegeService messegeService;
+    MessageService messageService;
 
     @Autowired
     DataSource myDataSource;

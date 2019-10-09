@@ -1,10 +1,10 @@
 package com.exampel.myMail.controller;
 
 import com.exampel.myMail.model.MessageDto;
-import com.exampel.myMail.model.Messege;
+import com.exampel.myMail.model.Message;
 import com.exampel.myMail.model.SendMessage;
 import com.exampel.myMail.model.User;
-import com.exampel.myMail.service.MessegeService;
+import com.exampel.myMail.service.MessageService;
 import com.exampel.myMail.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +16,10 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-public class ClientMessegeRestController {
+public class ClientMessageRestController {
 
     @Autowired
-   private MessegeService messegeService;
+   private MessageService messageService;
 
     @Autowired
    private UserService userService;
@@ -32,12 +32,12 @@ public class ClientMessegeRestController {
         User userSender = userService.findByLogin(principal.getName());
 
         if(userRecipient != null){
-            Messege messege = new Messege();
-            messege.setContent(sendMessage.getMyContent());
-            messege.setUserSender(userSender);
-            messege.setUserRecip(userRecipient);
-            messege.setMsgTime(new Date());
-            messegeService.addMessege(messege);
+            Message message = new Message();
+            message.setContent(sendMessage.getMyContent());
+            message.setUserSender(userSender);
+            message.setUserRecip(userRecipient);
+            message.setMsgTime(new Date());
+            messageService.addMessage(message);
 
             return new ResponseEntity<>("Сообщение успешно отправлено", HttpStatus.OK);
         }
@@ -48,13 +48,13 @@ public class ClientMessegeRestController {
     @GetMapping(value = "client/showIncomeMessages")
     public String showIncomeMessagesWithTemplate(Principal principal){
         User user = userService.findByLogin(principal.getName());
-        return messegeService.getAllIncomeMessagesWithTemplate(user);
+        return messageService.getAllIncomeMessagesWithTemplate(user);
     }
 
     @GetMapping(value = "client/showOutcomeMessages")
     public String showOutcomeMessagesWithTemplate(Principal principal){
         User user = userService.findByLogin(principal.getName());
-        return messegeService.getAllOutcomeMessagesWithTemplate(user);
+        return messageService.getAllOutcomeMessagesWithTemplate(user);
     }
 
     @GetMapping (path = "/allMessages/{user}")
@@ -62,25 +62,25 @@ public class ClientMessegeRestController {
         User userSender = userService.findByLogin(principal.getName());
         User userRecip = userService.findByLogin(user);
 
-        List<Messege> senderMessages = messegeService.getAllMessageByUser(userSender, userRecip);
-        List<Messege> recipMessages = messegeService.getAllMessageByUser(userRecip, userSender);
+        List<Message> senderMessages = messageService.getAllMessageByUser(userSender, userRecip);
+        List<Message> recipMessages = messageService.getAllMessageByUser(userRecip, userSender);
 
         List<MessageDto> result = new ArrayList<>();
 
-        for (Messege messege : senderMessages){
+        for (Message message : senderMessages){
             MessageDto  messageDto = new MessageDto();
-            messageDto.setContent(messege.getContent());
+            messageDto.setContent(message.getContent());
             messageDto.setMyMsg(true);
-            messageDto.setCreateMsgTime(messege.getMsgTime());
+            messageDto.setCreateMsgTime(message.getMsgTime());
 
             result.add(messageDto);
         }
 
-        for (Messege messege : recipMessages){
+        for (Message message : recipMessages){
             MessageDto  messageDto = new MessageDto();
-            messageDto.setContent(messege.getContent());
+            messageDto.setContent(message.getContent());
             messageDto.setMyMsg(false);
-            messageDto.setCreateMsgTime(messege.getMsgTime());
+            messageDto.setCreateMsgTime(message.getMsgTime());
 
             result.add(messageDto);
         }

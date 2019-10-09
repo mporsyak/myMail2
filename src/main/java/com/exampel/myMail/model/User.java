@@ -15,7 +15,7 @@ public class User {
     private String password;
 
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "userSender")
-    private List<Messege> list;
+    private List<Message> list;
 
     public User() {}
 
@@ -59,11 +59,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Messege> getList() {
+    public List<Message> getList() {
         return list;
     }
 
-    public void setList(List<Messege> list) {
+    public void setList(List<Message> list) {
         this.list = list;
     }
 }

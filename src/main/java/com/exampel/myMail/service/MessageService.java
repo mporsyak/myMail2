@@ -2,9 +2,9 @@ package com.exampel.myMail.service;
 
 
 import com.exampel.myMail.model.MessageDto;
-import com.exampel.myMail.model.Messege;
+import com.exampel.myMail.model.Message;
 import com.exampel.myMail.model.User;
-import com.exampel.myMail.repository.MessegeRepository;
+import com.exampel.myMail.repository.MessageRepository;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -18,19 +18,20 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class MessegeService {
+public class MessageService {
     @Autowired
-    MessegeRepository messegeRepository;
+    MessageRepository messageRepository;
 
     private RestTemplate restTemplate;
 
-    public MessegeService(RestTemplateBuilder templateBuilder){
+    public MessageService(RestTemplateBuilder templateBuilder){
         restTemplate = templateBuilder.build();
     }
 
-    public void addMessege(Messege messege){messegeRepository.save(messege);}
+    public void addMessage(Message message){
+        messageRepository.save(message);}
 
-    public Messege getMessege(String content){return messegeRepository.findByContent(content);}
+    public Message getMessage(String content){return messageRepository.findByContent(content);}
 
     private HttpEntity<String> getEntity(User user){
         HttpHeaders headers = new HttpHeaders();
@@ -65,16 +66,16 @@ public class MessegeService {
     }
 
     private List<MessageDto> getAllDirectMessages(boolean isOutcomeDirect, String authUserLogin){
-        List<Messege> allMessegeList = getAllMessage();
+        List<Message> allMessageList = getAllMessage();
 
         List<MessageDto> messages = new ArrayList();
-        for (int i = 0; i < allMessegeList.size(); i++) {
-            Messege currentMessege = allMessegeList.get(i);
+        for (int i = 0; i < allMessageList.size(); i++) {
+            Message currentMessage = allMessageList.get(i);
 
-            if (isOutcomeDirect ? currentMessege.getUserSender().getLogin().equals(authUserLogin) : currentMessege.getUserRecip().getLogin().equals(authUserLogin)){
+            if (isOutcomeDirect ? currentMessage.getUserSender().getLogin().equals(authUserLogin) : currentMessage.getUserRecip().getLogin().equals(authUserLogin)){
                 MessageDto messageInfo = new MessageDto();
-                messageInfo.setContent(currentMessege.getContent());
-                messageInfo.setGoal((isOutcomeDirect ? ("Получатель: " + currentMessege.getUserRecip().getLogin()) : ("Отправитель: " + currentMessege.getUserSender().getLogin())));
+                messageInfo.setContent(currentMessage.getContent());
+                messageInfo.setGoal((isOutcomeDirect ? ("Получатель: " + currentMessage.getUserRecip().getLogin()) : ("Отправитель: " + currentMessage.getUserSender().getLogin())));
                 messages.add(messageInfo);
             }
         }
@@ -82,12 +83,12 @@ public class MessegeService {
         return messages;
     }
 
-    public List<Messege> getAllMessage(){
-        return (List<Messege>)messegeRepository.findAll();
+    public List<Message> getAllMessage(){
+        return (List<Message>) messageRepository.findAll();
     }
 
-    public List<Messege> getAllMessageByUser(User userSender, User userRecip){
-        return messegeRepository.findByUserSenderAndUserRecip(userSender, userRecip);
+    public List<Message> getAllMessageByUser(User userSender, User userRecip){
+        return messageRepository.findByUserSenderAndUserRecip(userSender, userRecip);
     }
 
 }

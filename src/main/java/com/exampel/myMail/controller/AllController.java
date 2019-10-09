@@ -28,10 +28,10 @@ public class AllController { //TODO: server-side rendering and client-side rende
         return "register";
     }
 
-    @GetMapping(value = "/addMessege")//TODO: Stateless and statefull
-    public String addMessege(Principal principal){
-//        return new ModelAndView("/addMessege", "authUser", principal.getName());
-        return "addMessege";
+    @GetMapping(value = "/addMessage")//TODO: Stateless and statefull
+    public String addMessage(Principal principal){
+//        return new ModelAndView("/addMessage", "authUser", principal.getName());
+        return "addMessage";
     }
 
     @GetMapping(path = "/addUser")
@@ -39,9 +39,9 @@ public class AllController { //TODO: server-side rendering and client-side rende
         return "addUser";
     }
 
-    @GetMapping(path = "/allMessege")
-    public String allMessege() {
-        return "allMessege";
+    @GetMapping(path = "/allMessage")
+    public String allMessage() {
+        return "allMessage";
     }
 
     @GetMapping (path = "/all")
