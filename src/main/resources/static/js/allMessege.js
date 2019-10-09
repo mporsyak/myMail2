@@ -1,9 +1,9 @@
 function showIncome() {
-    showModal("showIncomeMessages");
+    showModal("client/showIncomeMessages");
 }
 
 function showOutcome() {
-    showModal("showOutcomeMessages");
+    showModal("client/showOutcomeMessages");
 }
 
 function showModal(url){
@@ -13,7 +13,7 @@ function showModal(url){
         url: url,
         data: null,
         success: function (response) {
-            getMessages(response);
+            getMessages(JSON.parse(response));
             $('#exampleModal').modal();
         }
     });
@@ -28,7 +28,7 @@ function getMessages(messages){
         myTBody.appendChild(tr);
 
         var tdContent = document.createElement("td");
-        tdContent.innerHTML = messages[i].content;
+        tdContent.innerHTML = "<p class='text-break'>" + messages[i].content + "</p>";
         tr.appendChild(tdContent);
 
         var tdGoal = document.createElement("td");

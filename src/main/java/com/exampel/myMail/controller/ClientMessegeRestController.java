@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-public class MessegeRestController {
+public class ClientMessegeRestController {
 
     @Autowired
    private MessegeService messegeService;
@@ -45,14 +45,16 @@ public class MessegeRestController {
         return new ResponseEntity<>("Пользователь " + sendMessage.getMyRecipLogin() + " не найден", HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping(value = "/showIncomeMessages")
-    public List<MessageDto> showIncomeMessages(Principal principal){
-        return messegeService.getAllIncomeMessages(principal.getName());
+    @GetMapping(value = "client/showIncomeMessages")
+    public String showIncomeMessagesWithTemplate(Principal principal){
+        User user = userService.findByLogin(principal.getName());
+        return messegeService.getAllIncomeMessagesWithTemplate(user);
     }
 
-    @GetMapping(value = "/showOutcomeMessages")
-    public List<MessageDto> showOutcomeMessages(Principal principal){
-        return messegeService.getAllOutcomeMessages(principal.getName());
+    @GetMapping(value = "client/showOutcomeMessages")
+    public String showOutcomeMessagesWithTemplate(Principal principal){
+        User user = userService.findByLogin(principal.getName());
+        return messegeService.getAllOutcomeMessagesWithTemplate(user);
     }
 
     @GetMapping (path = "/allMessages/{user}")
